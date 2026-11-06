@@ -1,54 +1,55 @@
-# FlameMC — Minecraft server software
+# FlameMC Website — Astro 6
 
-Production Astro website for **https://flamemc.arkflame.com/**. FlameMC is **available now on BuiltByBit**: https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/.
+Source for **https://flamemc.arkflame.com/**. Download FlameMC on [BuiltByBit](https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/).
 
-## Fix the Jekyll build error (Pages source setting)
+## Fix: GitHub Pages is running Jekyll instead of Astro
 
-A run named **`pages build and deployment`** containing `actions/jekyll-build-pages@v1` means GitHub is attempting to build the repository's `.astro` source as Jekyll. The Astro templates are not Jekyll YAML frontmatter. **Do not edit them to satisfy Jekyll.** This is a GitHub repository setting, not an Astro template error.
+If an Actions log says `actions/jekyll-build-pages@v1` or `Invalid YAML front matter in src/pages/*.astro`, the **repository's Pages publishing source is still set to "Deploy from a branch."** Astro files contain JavaScript/TypeScript frontmatter, not Jekyll YAML. Do not edit them for Jekyll and do not publish the repository root.
 
-**One-time fix (repository admin):**
+**One-time correction:** In [repository Settings → Pages](https://github.com/ArkFlame/FlameMC-Website/settings/pages), change **Build and deployment → Source → GitHub Actions**. Then run the `Build and deploy FlameMC website` workflow from [Actions](https://github.com/ArkFlame/FlameMC-Website/actions/workflows/deploy.yml), using `main`.
 
-1. Open **Settings → Pages → Build and deployment → Source** in `ArkFlame/FlameMC-Website`.
-2. Select **GitHub Actions**, not **Deploy from a branch**.
-3. In **Actions**, run **Build and deploy FlameMC website** on `main` after pushing this repository.
-
-Or configure the source through the authenticated GitHub CLI:
+**Command-line equivalent (requires repository Pages/Admin permissions):**
 
 ```bash
 bash scripts/fix-github-pages.sh ArkFlame/FlameMC-Website
 ```
 
-The script only changes the Pages publishing mode to `workflow` and verifies it. It requires a GitHub account with repository admin / Pages management permissions. It does **not** push repository changes, update DNS, or deploy without the workflow being run.
+This script switches Pages to Actions, verifies the custom domain, and triggers the deployment **only if the workflow exists on remote main**. It does not commit, push, or overwrite repository files. The GitHub CLI must be installed and authenticated via `gh auth login`. If GitHub denies the Pages settings API call, use the Settings UI; a normal workflow `GITHUB_TOKEN` cannot grant itself repository admin permissions.
 
-The workflow is `.github/workflows/deploy.yml`: it installs Node dependencies, validates source, builds Astro, verifies `dist/index.html`, uploads `dist/` as a Pages artifact, and deploys with `actions/deploy-pages`. It also detects accidental `legacy` publishing configuration with an actionable error message.
+After the workflow completes, verify the live page, not the repository's **Code** tab:
 
-The custom domain remains `flamemc.arkflame.com`, configured under Settings → Pages and through DNS. `public/CNAME` alone does not set GitHub Pages' domain. A README appearing under the GitHub **Code** tab is normal; only seeing it at the actual website URL indicates a publishing problem.
+```bash
+bash scripts/diagnose-github-pages.sh ArkFlame/FlameMC-Website
+```
 
-## Local development
+The repo's Code tab will always show `README.md`; that is expected and is not the website.
 
-Requires Node.js 22.12+ and npm (Node.js 24 recommended).
+## Install, develop, build
+
+Use **Node.js 24** in CI. Node.js **22.12+** is supported by Astro 6.
 
 ```bash
 npm install
-npm run dev
 npm run check:static
 npm run build
 npm run check:deploy
-npm run preview
+npm run dev
 ```
 
-- Source pages: `src/pages/`; articles: `src/content/guides/`.
-- Compiled deployment output: `dist/` — **never publish the repository root**.
-- HTML/CSS and small progressive-enhancement JS; no database, API server, hydration framework, hosted fonts, or trackers.
-- GitHub Pages workflow: `.github/workflows/deploy.yml`.
-- Domain: `astro.config.mjs` sets `site: 'https://flamemc.arkflame.com'`, intentionally without a `base` path. `public/CNAME` is copied into `dist/CNAME` for portability, but GitHub Actions-based Pages uses the custom domain configured in repository Settings; the CNAME file alone does not configure the domain.
-- `public/.nojekyll` is copied into `dist/.nojekyll`.
-- Every deployment verifies generated homepage, guides, critical assets, the CNAME and sitemap; it fails rather than publishing a README.
+The site lives under `src/pages` with seven SEO articles in `src/content/guides`. Assets are in `public/`. `npm run build` creates `dist/`. Only `dist/` is uploaded through `.github/workflows/deploy.yml`. It uses `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages` following the [GitHub Pages custom Actions workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
-## Product content
+## Custom domain
 
-The landing page showcases Folia regionized threading, FlameMC's compatibility approach, conceptual concurrency diagrams, and the live listing. Seven technical guides compare Paper, Folia, Canvas, UniverseSpigot, and FlameMC, explain region ownership, and discuss migration and plugin compatibility. Cross-architecture diagrams are **illustrative**, not measured TPS benchmarks. Plugin compatibility varies by build and workload.
+- Pages custom domain: `flamemc.arkflame.com`
+- Astro config `site: 'https://flamemc.arkflame.com'`, **no `base` prefix**.
+- DNS: `flamemc` CNAME to your GitHub Pages account/organization's `*.github.io` endpoint.
+- `public/CNAME` is bundled as `dist/CNAME`. It is **not** a substitute for configuring the domain in Pages settings.
+- `public/.nojekyll` is bundled as `dist/.nojekyll`; it **cannot** switch Pages away from a Jekyll build.
 
-## Limitations
+## Release contents
 
-The product itself and any claimed throughput are not benchmarked by this website project. GitHub repository settings, DNS and the production endpoint require deployment access; they cannot be modified by extracting the source archive.
+The landing page describes Folia regionized threading, FlameMC's compatibility approach, interactive conceptual diagrams, FAQs, and the available BuiltByBit listing. The seven guides cover Paper, Folia, Canvas, UniverseSpigot, migration, and region threading. Conceptual scheduling illustrations are not benchmark results; compatibility varies by workload and server build.
+
+## Verification limitations
+
+Local static checks can verify source correctness and workflow structure. The full Astro build requires npm dependencies. The live repository setting, custom-domain DNS, GitHub Actions run, and public page response must be verified after applying the one-time Pages configuration change. No source archive can change the live GitHub Pages publishing mode without GitHub administration access.
