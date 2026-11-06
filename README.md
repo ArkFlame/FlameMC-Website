@@ -2,17 +2,27 @@
 
 Production Astro website for **https://flamemc.arkflame.com/**. FlameMC is **available now on BuiltByBit**: https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/.
 
-## Fix: GitHub Pages displays this README instead of the site
+## Fix the Jekyll build error (Pages source setting)
 
-**Cause:** GitHub Pages is publishing `main` as a Jekyll/branch site instead of publishing the compiled Astro pages. The repository contains `.astro` source files; it does not contain a ready-to-serve root `index.html`. If the README appears at the public domain, check the Pages publishing source and the latest deployment artifact. If the README appears on `github.com` in the Code tab, that is normal repository behavior.
+A run named **`pages build and deployment`** containing `actions/jekyll-build-pages@v1` means GitHub is attempting to build the repository's `.astro` source as Jekyll. The Astro templates are not Jekyll YAML frontmatter. **Do not edit them to satisfy Jekyll.** This is a GitHub repository setting, not an Astro template error.
 
-1. Open the actual repository at **Settings → Pages → Build and deployment → Source**, select **GitHub Actions** (not *Deploy from a branch*).
-2. Go to **Actions → Build and deploy FlameMC website → Run workflow**, select **main**, and run it. The workflow checks the source, builds Astro, verifies that `dist/index.html` exists, then publishes **`dist/`**.
-3. In **Settings → Pages**, set **Custom domain** to `flamemc.arkflame.com`. DNS needs a record `flamemc CNAME <actual-account-or-org>.github.io`. Enable **Enforce HTTPS** once available.
+**One-time fix (repository admin):**
 
-**Important:** If you see this README while browsing `github.com/.../flamemc-website`, that is *normal GitHub repository behavior*, not the public website. The actual website is `https://flamemc.arkflame.com/`.
+1. Open **Settings → Pages → Build and deployment → Source** in `ArkFlame/FlameMC-Website`.
+2. Select **GitHub Actions**, not **Deploy from a branch**.
+3. In **Actions**, run **Build and deploy FlameMC website** on `main` after pushing this repository.
 
-The workflow only deploys on `main` or manual dispatch. GitHub Pages' **Source** setting cannot be reliably changed by a file committed to the repository. Confirm it once in Settings.
+Or configure the source through the authenticated GitHub CLI:
+
+```bash
+bash scripts/fix-github-pages.sh ArkFlame/FlameMC-Website
+```
+
+The script only changes the Pages publishing mode to `workflow` and verifies it. It requires a GitHub account with repository admin / Pages management permissions. It does **not** push repository changes, update DNS, or deploy without the workflow being run.
+
+The workflow is `.github/workflows/deploy.yml`: it installs Node dependencies, validates source, builds Astro, verifies `dist/index.html`, uploads `dist/` as a Pages artifact, and deploys with `actions/deploy-pages`. It also detects accidental `legacy` publishing configuration with an actionable error message.
+
+The custom domain remains `flamemc.arkflame.com`, configured under Settings → Pages and through DNS. `public/CNAME` alone does not set GitHub Pages' domain. A README appearing under the GitHub **Code** tab is normal; only seeing it at the actual website URL indicates a publishing problem.
 
 ## Local development
 

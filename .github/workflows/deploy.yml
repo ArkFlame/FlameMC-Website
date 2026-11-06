@@ -21,6 +21,20 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Check GitHub Pages publishing mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mode="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.build_type // "unknown"' 2>/dev/null || true)"
+          if [[ "$mode" == "legacy" ]]; then
+            echo "::error::GitHub Pages is configured for Jekyll/branch deployment. Open Settings > Pages > Build and deployment > Source and select GitHub Actions, then rerun this workflow."
+            exit 1
+          fi
+          if [[ "$mode" != "workflow" ]]; then
+            echo "::warning::Pages publishing mode could not be verified (mode=${mode:-unknown}). Confirm Source = GitHub Actions in Settings > Pages."
+          fi
+
       - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
