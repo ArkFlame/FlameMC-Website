@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const allGuides = await getCollection('guides');
+const priority = ['minecraft-server-software-comparison-2026','paper-vs-folia','flamemc-vs-folia','canvas-vs-folia-vs-flamemc','folia-plugin-compatibility','region-threading-explained','universespigot-vs-flamemc'];
+const guides = allGuides.sort((a,b)=>priority.indexOf(a.id)-priority.indexOf(b.id));
+---
+<BaseLayout title="Minecraft Server Guides & Comparisons | FlameMC" description="Technical guides to Paper, Folia, Canvas, FlameMC and UniverseSpigot. Region threading, plugin compatibility, migration and honest performance comparison." path="/guides/">
+  <main id="content" class="editorial-page">
+    <section class="editorial-hero container">
+      <div class="editorial-overline"><span class="status-led"></span> FLAMEMC FIELD NOTES <span class="editorial-divider">/</span> ARCHITECTURE & GUIDES</div>
+      <h1>Understand the engine.<br/><span>Choose the right server.</span></h1>
+      <p class="editorial-lede">Source-backed explanations of Minecraft server threading, Paper plugin compatibility, and the trade-offs between today's server forks. Built for administrators and developers making real deployment decisions.</p>
+      <div class="editorial-meta">7 GUIDES <span>·</span> UPDATED NOVEMBER 2026 <span>·</span> NO INVENTED BENCHMARKS</div>
+    </section>
+    <section class="container editorial-feed" aria-label="FlameMC guides">
+      {guides.map((guide, i) => (
+        <a href={`/guides/${guide.id}/`} class:list={['editorial-card',{'editorial-card-featured':i===0}]}>
+          <div class="editorial-card-top"><span>{guide.data.category.toUpperCase()}</span><span>{String(i+1).padStart(2,'0')} / 07</span></div>
+          <h2>{guide.data.title}</h2>
+          <p>{guide.data.description}</p>
+          <div class="editorial-card-footer"><span>{guide.data.readingMinutes} MIN READ</span><span class="editorial-card-arrow" aria-hidden="true">↗</span></div>
+        </a>
+      ))}
+    </section>
+    <section class="container editorial-cta"><div><span class="kicker">THE FLAMEMC APPROACH</span><h2>The concurrency of Folia.<br/><span>The ecosystem of Paper.</span></h2><p>A server built for region threading and supported Paper workflows.</p></div><a class="button button-primary" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" rel="noopener noreferrer" target="_blank">Get FlameMC <span aria-hidden="true">↗</span></a></section>
+  </main>
+</BaseLayout>

@@ -1,50 +1,44 @@
-# FlameMC Website · Astro 6
+# FlameMC — Minecraft server software
 
-Static, responsive product website for FlameMC. Deploys with GitHub Actions to **https://flamemc.arkflame.com**. No server, database, JS framework hydration, hosted fonts, or third-party trackers.
+Production Astro website for **https://flamemc.arkflame.com/**. FlameMC is **available now on BuiltByBit**: https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/.
 
-## Requirements
+## Fix: GitHub Pages displays this README instead of the site
 
-- Node.js 22.12+ (Node 24 recommended on CI)
-- npm
+**Cause:** GitHub Pages is publishing `main` as a Jekyll/branch site instead of publishing the compiled Astro pages. The repository contains `.astro` source files; it does not contain a ready-to-serve root `index.html`. If the README appears at the public domain, check the Pages publishing source and the latest deployment artifact. If the README appears on `github.com` in the Code tab, that is normal repository behavior.
+
+1. Open the actual repository at **Settings → Pages → Build and deployment → Source**, select **GitHub Actions** (not *Deploy from a branch*).
+2. Go to **Actions → Build and deploy FlameMC website → Run workflow**, select **main**, and run it. The workflow checks the source, builds Astro, verifies that `dist/index.html` exists, then publishes **`dist/`**.
+3. In **Settings → Pages**, set **Custom domain** to `flamemc.arkflame.com`. DNS needs a record `flamemc CNAME <actual-account-or-org>.github.io`. Enable **Enforce HTTPS** once available.
+
+**Important:** If you see this README while browsing `github.com/.../flamemc-website`, that is *normal GitHub repository behavior*, not the public website. The actual website is `https://flamemc.arkflame.com/`.
+
+The workflow only deploys on `main` or manual dispatch. GitHub Pages' **Source** setting cannot be reliably changed by a file committed to the repository. Confirm it once in Settings.
+
+## Local development
+
+Requires Node.js 22.12+ and npm (Node.js 24 recommended).
 
 ```bash
 npm install
 npm run dev
 npm run check:static
 npm run build
+npm run check:deploy
 npm run preview
 ```
 
-Astro outputs `dist/`. The HTML page is `src/pages/index.astro`. CSS, assets, and progressive-enhancement JavaScript are in `public/`.
+- Source pages: `src/pages/`; articles: `src/content/guides/`.
+- Compiled deployment output: `dist/` — **never publish the repository root**.
+- HTML/CSS and small progressive-enhancement JS; no database, API server, hydration framework, hosted fonts, or trackers.
+- GitHub Pages workflow: `.github/workflows/deploy.yml`.
+- Domain: `astro.config.mjs` sets `site: 'https://flamemc.arkflame.com'`, intentionally without a `base` path. `public/CNAME` is copied into `dist/CNAME` for portability, but GitHub Actions-based Pages uses the custom domain configured in repository Settings; the CNAME file alone does not configure the domain.
+- `public/.nojekyll` is copied into `dist/.nojekyll`.
+- Every deployment verifies generated homepage, guides, critical assets, the CNAME and sitemap; it fails rather than publishing a README.
 
-## GitHub Pages deployment
+## Product content
 
-1. Push these files into the desired **flamemc-website** GitHub repository, using `main` as the deployment branch.
-2. In repository **Settings → Pages**, set **Build and deployment → Source → GitHub Actions**.
-3. In the same section, set **Custom domain** to `flamemc.arkflame.com` and save. GitHub's Pages configuration must recognize the domain even when the workflow includes a `CNAME` file.
-4. In the `arkflame.com` DNS zone, add **CNAME**: `flamemc` → `<your-actual-GitHub-account-or-organization>.github.io` (do not append `/flamemc-website` and do not point to `arkflame.com`).
-5. Run `.github/workflows/deploy.yml` on `main`. Once GitHub finishes TLS certificate provisioning, enable **Enforce HTTPS**.
+The landing page showcases Folia regionized threading, FlameMC's compatibility approach, conceptual concurrency diagrams, and the live listing. Seven technical guides compare Paper, Folia, Canvas, UniverseSpigot, and FlameMC, explain region ownership, and discuss migration and plugin compatibility. Cross-architecture diagrams are **illustrative**, not measured TPS benchmarks. Plugin compatibility varies by build and workload.
 
-`astro.config.mjs` intentionally uses `site: 'https://flamemc.arkflame.com'` and **no** `base` path, because this is a custom-domain project site.
+## Limitations
 
-The official Astro action requires a package-manager choice or a lockfile. This repository uses direct `npm install` in GitHub Actions, so the first deployment doesn't depend on an unavailable generated lockfile. Commit `package-lock.json` after your first successful `npm install` locally, then optionally change the CI step to `npm ci` for deterministic installs.
-
-## Content and claims
-
-- The site describes Folia-based regionized threading and FlameMC's owner-aware compatibility approach, not universal acceleration or 100% Paper plugin compatibility.
-- The scheduling/CPU comparison is a **conceptual diagram**, explicitly labeled **not a benchmark**. It intentionally does **not** reproduce the uploaded example's unverified TPS and CPU figures.
-- Compatibility varies with plugin code and operation. Test plugin workloads on your target build.
-- Before public launch, verify the project's public source/download URL and add a real, verified destination in the header CTA if available. Current CTAs scroll to in-page explanatory sections or link to the known ArkFlame Studios site.
-
-## Design/technical details
-
-- Primary pages: single long-form landing page with header, hero, advantages, ownership diagram, conceptual comparison, compatibility section, FAQs, and CTA.
-- CSS animations and a small vanilla JS controller; honors `prefers-reduced-motion`.
-- Responsive across 320–1920px. Semantic headings, keyboard-accessible nav, focus indicators, alt text, FAQ native `details` elements.
-- Metadata: canonical URL, Open Graph image, robots.txt, sitemap.xml, SVG favicon, and CNAME.
-
-## Not included / operational risks
-
-- No live server benchmarks or measured compatibility matrix was supplied.
-- No CMS, downloads backend, telemetry, cookies, contact form or external runtime service.
-- DNS/Pages settings and deployment to the user’s repository cannot be changed from this archive.
+The product itself and any claimed throughput are not benchmarked by this website project. GitHub repository settings, DNS and the production endpoint require deployment access; they cannot be modified by extracting the source archive.

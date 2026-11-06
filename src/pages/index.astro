@@ -1,56 +1,24 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#09090d" />
-  <meta name="color-scheme" content="dark" />
-  <title>FlameMC — Scale Your World. Keep Your Plugins.</title>
-  <meta name="description" content="FlameMC combines Folia's regionized multithreading with an owner-aware compatibility layer for familiar Bukkit and Paper workflows. Build beyond the single-thread ceiling." />
-  <link rel="canonical" href="https://flamemc.arkflame.com/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="FlameMC" />
-  <meta property="og:title" content="FlameMC — Scale Your World. Keep Your Plugins." />
-  <meta property="og:description" content="The concurrency of Folia. The ecosystem of Paper. Minecraft server software, reengineered." />
-  <meta property="og:image" content="https://flamemc.arkflame.com/og-image.png" />
-  <meta property="og:url" content="https://flamemc.arkflame.com/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles/site.css" />
-  <script is:inline src="/scripts/site.js" defer></script>
-</head>
-<body>
-  <a class="skip-link" href="#content">Skip to content</a>
-  <div class="page-noise" aria-hidden="true"></div>
-  <header class="site-header" data-header>
-    <div class="header-inner container">
-      <a class="brand" href="#top" aria-label="FlameMC home">
-        <svg class="brand-flame" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M38 4C37 16 27 23 29 32c-6-4-8-9-7-16C12 25 9 34 13 45c3 10 11 16 21 16 12 0 22-11 19-23-2-9-7-15-13-20 1 7 0 12-4 16-4-9 0-21 2-30Z" fill="currentColor"/><path d="M32 36c-1 8-8 10-6 17 1 4 5 6 9 6 6 0 10-5 9-11-1-4-4-7-7-10-1 5-3 8-5 9 0-4 1-7 0-11Z" fill="#0b090b"/></svg>
-        <span>Flame<span class="brand-accent">MC</span></span>
-      </a>
-      <nav class="nav-links" id="primary-nav" aria-label="Main navigation" data-menu>
-        <a href="#advantages">Advantages</a>
-        <a href="#architecture">Architecture</a>
-        <a href="#comparison">Why regions</a>
-        <a href="#faq">FAQ</a>
-        <a class="nav-action" href="#start">Explore FlameMC <span aria-hidden="true">↗</span></a>
-      </nav>
-      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
-    </div>
-  </header>
-
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="FlameMC — Folia Multithreading with Paper Plugin Compatibility"
+  description="FlameMC Minecraft server software brings Folia regionized multithreading together with an owner-aware compatibility layer for Bukkit and Paper plugin workflows. Available on BuiltByBit."
+  path="/"
+>
   <main id="content">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-grid container">
         <div class="hero-copy">
           <div class="eyebrow hero-eyebrow"><span class="eyebrow-line"></span> MINECRAFT SERVER SOFTWARE <span class="eyebrow-muted">/ REENGINEERED</span></div>
           <h1 id="hero-title">Scale your world.<br/><span>Keep your plugins.</span></h1>
-          <p class="hero-lede">The concurrency of <strong>Folia</strong>. The familiar ecosystem of <strong>Paper</strong>. Finally, built to work together.</p>
+          <p class="hero-lede">The concurrency of <strong>Folia</strong>. The familiar ecosystem of <strong>Paper</strong>. One server built around both.</p>
           <p class="hero-body">Parallel region threading and a compatibility layer designed around real Minecraft server workloads.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#architecture">See how it works <span aria-hidden="true">↗</span></a>
-            <a class="button button-ghost" href="#comparison">Why region threading <span aria-hidden="true">→</span></a>
+            <a class="button button-primary" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a>
+            <a class="button button-ghost" href="#architecture">Explore the architecture <span aria-hidden="true">→</span></a>
           </div>
+          <div class="release-status"><span class="pulse-dot" aria-hidden="true"></span> NOW AVAILABLE <span class="release-status-muted">ON BUILTBYBIT</span></div>
           <div class="hero-points" aria-label="Key characteristics"><span><i aria-hidden="true"></i> Regionized threading</span><span><i aria-hidden="true"></i> Owner-aware compatibility</span></div>
         </div>
         <div class="hero-visual" aria-label="A stylized network of three Minecraft chunks linked by FlameMC">
@@ -64,7 +32,7 @@
         </div>
       </div>
       <div class="hero-bottom container">
-        <span>ENGINEERED FOR THE NEXT GENERATION OF MINECRAFT SERVERS</span>
+        <span>AVAILABLE NOW · THE CONCURRENCY OF FOLIA, THE ECOSYSTEM OF PAPER</span>
         <a href="#advantages" aria-label="Scroll to advantages">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
       </div>
     </section>
@@ -103,7 +71,7 @@
         </div>
         <div class="architecture-grid">
           <div class="region-panel" data-reveal>
-            <div class="panel-topline"><span><i class="status-led" aria-hidden="true"></i> LIVE REGION MAP</span><span>ILLUSTRATIVE TOPOLOGY</span></div>
+            <div class="panel-topline"><span><i class="status-led" aria-hidden="true"></i> REGION MAP</span><span>ILLUSTRATIVE TOPOLOGY</span></div>
             <div class="region-matrix" aria-label="Conceptual grid of twenty-four independently ticking regions">
               <span class="region-cell region-lit" data-lane="0" aria-hidden="true"><span>R01</span><i></i></span>
 <span class="region-cell " data-lane="1" aria-hidden="true"><span>R02</span><i></i></span>
@@ -214,7 +182,7 @@
           <h2 id="compatibility-title">Your server moves forward.<br/><span class="text-gradient">Your ecosystem comes along.</span></h2>
           <p>Most server owners already have the plugins, commands, and workflows they rely on. FlameMC is engineered to bridge that investment into a region-threaded world.</p>
           <div class="compat-claims"><div><span class="claim-icon">↗</span><strong>Legacy scheduler workflows</strong></div><div><span class="claim-icon">↗</span><strong>Ownership-aware Bukkit calls</strong></div><div><span class="claim-icon">↗</span><strong>Paper-style plugin integrations</strong></div></div>
-          <p class="support-note">Compatibility is API- and plugin-dependent. Validate your plugin set before production migration.</p>
+          <p class="support-note">Compatibility is API- and plugin-dependent, not universal. Test your plugin set before production migration.</p>
         </div>
         <div class="compat-visual" data-reveal>
           <div class="compat-rail"><div class="compat-tile plugin-tile"><img src="/assets/plugins.webp" width="512" height="512" alt="" loading="lazy" /><span>PAPER / BUKKIT</span></div><div class="compat-route"><span>CALLS</span><i></i><span>ROUTED</span></div><div class="compat-tile engine-tile"><img src="/assets/routing.webp" width="512" height="512" alt="" loading="lazy" /><span>FOLIA OWNERS</span></div></div>
@@ -228,11 +196,28 @@
       <div class="container faq-grid">
         <div class="faq-intro" data-reveal><p class="kicker"><span class="kicker-num">05</span> / QUESTIONS</p><h2 id="faq-title">Clear answers.<br/><span class="text-gradient">No magic claims.</span></h2><p>Powerful concurrency needs precise behavior. Here's what the platform actually sets out to do.</p></div>
         <div class="faq-list" data-reveal>
+          <details><summary>Where can I get FlameMC?<span aria-hidden="true">+</span></summary><p>FlameMC is now available from <a href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">the official BuiltByBit listing</a>. Check the listing for current releases and setup instructions.</p></details>
           <details><summary>Is FlameMC based on Folia?<span aria-hidden="true">+</span></summary><p>Yes. Folia's regionized threading and ownership model are the foundation. FlameMC builds its compatibility behavior around those guarantees.</p></details>
           <details><summary>Will my Paper plugins work unchanged?<span aria-hidden="true">+</span></summary><p>Many common workflows are targeted by the compatibility layer, but full compatibility is not guaranteed. Plugins that rely on unsupported synchronous or cross-region behavior still need testing or adaptation.</p></details>
           <details><summary>Does region threading guarantee higher TPS?<span aria-hidden="true">+</span></summary><p>No. Independent regions can use multiple cores, but performance depends on workload partitioning, how players are distributed, hardware, and plugin cost. No fixed multiplier is guaranteed.</p></details>
           <details><summary>Does FlameMC disable Folia's safety checks?<span aria-hidden="true">+</span></summary><p>No. Its design keeps native ownership as the authority and routes compatible operations to the correct executor rather than freely accessing live state from the wrong region.</p></details>
         </div>
+      </div>
+    </section>
+
+
+    <section class="section knowledge" id="guides" aria-labelledby="guides-title">
+      <div class="container">
+        <div class="section-intro" data-reveal>
+          <div><p class="kicker"><span class="kicker-num">06</span> / FIELD NOTES</p><h2 id="guides-title">Know your server.<br/><span class="text-gradient">Choose your architecture.</span></h2></div>
+          <p>Practical guides to Folia, Paper, plugin migration and server-fork decisions. No fabricated benchmark rankings.</p>
+        </div>
+        <div class="guide-teasers">
+          <a class="guide-teaser" href="/guides/paper-vs-folia/"><span class="guide-teaser-tag">ARCHITECTURE</span><h3>Paper vs Folia: what actually changes?</h3><span class="guide-teaser-arrow" aria-hidden="true">↗</span></a>
+          <a class="guide-teaser" href="/guides/canvas-vs-folia-vs-flamemc/"><span class="guide-teaser-tag">COMPARISON</span><h3>Canvas, Folia and FlameMC compared.</h3><span class="guide-teaser-arrow" aria-hidden="true">↗</span></a>
+          <a class="guide-teaser" href="/guides/folia-plugin-compatibility/"><span class="guide-teaser-tag">MIGRATION</span><h3>How to audit Paper plugins for Folia.</h3><span class="guide-teaser-arrow" aria-hidden="true">↗</span></a>
+        </div>
+        <a class="editorial-more" href="/guides/">Explore all guides <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
@@ -242,11 +227,9 @@
         <p class="kicker">A BETTER FOUNDATION FOR YOUR NEXT WORLD</p>
         <h2 id="outro-title">The concurrency of <span>Folia.</span><br/>The ecosystem of <span>Paper.</span></h2>
         <p>Minecraft server software, reengineered for scale.</p>
-        <div class="outro-actions"><a class="button button-primary" href="#top">Back to the top <span aria-hidden="true">↑</span></a><a class="button button-ghost" href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">Explore ArkFlame <span aria-hidden="true">↗</span></a></div>
+        <div class="outro-actions"><a class="button button-primary" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC on BuiltByBit <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/guides/">Read the guides <span aria-hidden="true">→</span></a></div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#top">FLAME<span>MC</span></a><span>THE NEXT GENERATION OF MINECRAFT SERVER SOFTWARE.</span><div><a href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">ARKFLAME STUDIOS ↗</a><span>© 2026 FLAMEMC</span></div></div></footer>
-</body>
-</html>
+</BaseLayout>

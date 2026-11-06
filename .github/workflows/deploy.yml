@@ -1,4 +1,4 @@
-name: Deploy FlameMC to GitHub Pages
+name: Build and deploy FlameMC website
 
 on:
   push:
@@ -11,29 +11,44 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: pages
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Use Node.js
-        uses: actions/setup-node@v6
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: '24'
+
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Static checks
+
+      - name: Validate source
         run: npm run check:static
-      - name: Build Astro
+
+      - name: Build static Astro site
         run: npm run build
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+
+      - name: Preserve static GitHub Pages assets
+        run: touch dist/.nojekyll
+
+      - name: Verify Pages artifact contains the website (not README)
+        run: npm run check:deploy
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload built dist directory
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -41,6 +56,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy
+      - name: Publish website
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4

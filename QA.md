@@ -1,31 +1,19 @@
-# QA report — FlameMC website v1
+# FlameMC Website — V2 Deployment Repair Verification
 
-## Browser-verified source rendering
+## Root cause and repair
 
-The homepage's `.astro` file contains ordinary semantic HTML (no server-side expressions). For browser QA, it was rendered directly after inlining the bundled public CSS/JS/assets, without a network server. This tests HTML/CSS/JS behavior but **does not substitute for an `astro build`**.
+**Symptom:** GitHub Pages displays the repository README rather than the website.
 
-- Chromium screenshots generated at 1440, 900, 390, and 320 px widths.
-- No horizontal overflow at any tested width.
-- No broken image in final screenshot pass.
-- All `[data-reveal]` sections became visible during scrolling.
-- No JavaScript page errors at tested widths.
-- 390px navigation opens via toggle and closes with Escape.
-- Reduced-motion media query tested at 320px.
-- Static test checks local resource existence, fragment destinations, CNAME and benchmark disclaimer.
+**Diagnosis:** GitHub Pages configured to publish the source branch runs Jekyll/Markdown instead of building Astro. When no root `index.html` is present, Pages may use `README.md` as the entry file. Correct target is the compiled Astro artifact `dist/index.html`.
 
-## Unverified / requires connected build environment
+**Change:** `.github/workflows/deploy.yml` builds Astro, verifies the resulting website and articles (`npm run check:deploy`), and uploads **only** `dist/`. `.nojekyll` is included. README documents exact Pages source selection and domain setup. No new frontend runtime/framework was introduced.
 
-- **Astro 6.4.6 installation and `npm run build`:** package registry DNS unavailable (`EAI_AGAIN`). The generated GitHub Actions workflow performs the install, static check, build, and Pages deployment in GitHub's own runner.
-- GitHub Pages activation, DNS CNAME, custom-domain verification, and HTTPS: external account changes are not in this archive.
-- Firefox and Safari visual regression.
-- Server/plugin performance claims: illustrative visual, not measured benchmarks.
+## Evidence
 
-## Command executed
+- `node tests/check-static.mjs` — **PASS**: seven guides, SEO canonical/schema, CNAME, product CTA, file paths, sitemap/RSS generation, and workflow publishing target.
+- Chromium inline-content fixture: homepage 1440px and 390px, guides index 390px, Paper vs Folia article 390px, download page 390px — **PASS**: no horizontal overflow, broken loaded images, or JavaScript errors; BuiltByBit links present. On mobile, navigation expanded (`aria-expanded=true`) and closed after Escape (`false`).
+- `flamemc-website-pages-fix-preview.png` — full desktop screenshot of the browser preview fixture.
+- **Astro build not run:** `npm view astro@6.4.6` failed with DNS `EAI_AGAIN` from registry.npmjs.org. The workflow's production compile remains a CI gate, not a claimed local pass.
+- **Not deployed:** GitHub repository Pages settings/DNS/live URL are not accessible for mutation here. Selecting **Source → GitHub Actions** is required once, even when the workflow and custom `CNAME` exist.
 
-```text
-node tests/check-static.mjs  => PASS
-python tests/visual-test.py => PASS visual checks, 4 breakpoints
-npm view astro@6.4.6       => BLOCKED EAI_AGAIN (registry DNS)
-```
-
-See `previews/qa.json` for machine-readable viewport results.
+Browser fixture generation is not an Astro compiler and therefore does not certify the production build.
