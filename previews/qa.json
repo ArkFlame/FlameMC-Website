@@ -1,0 +1,84 @@
+{
+  "1440": {
+    "status": "inline preview",
+    "title": "FlameMC \u2014 Scale Your World. Keep Your Plugins.",
+    "horizontalOverflow": false,
+    "bodyScrollWidth": 1440,
+    "pageHeight": 6427,
+    "images": 6,
+    "brokenImages": [],
+    "missingReveal": 0,
+    "jsErrors": [],
+    "overflowElements": []
+  },
+  "900": {
+    "status": "inline preview",
+    "title": "FlameMC \u2014 Scale Your World. Keep Your Plugins.",
+    "horizontalOverflow": false,
+    "bodyScrollWidth": 900,
+    "pageHeight": 7577,
+    "images": 6,
+    "brokenImages": [],
+    "missingReveal": 0,
+    "jsErrors": [],
+    "overflowElements": []
+  },
+  "390": {
+    "status": "inline preview",
+    "title": "FlameMC \u2014 Scale Your World. Keep Your Plugins.",
+    "horizontalOverflow": false,
+    "bodyScrollWidth": 390,
+    "pageHeight": 8221,
+    "images": 6,
+    "brokenImages": [],
+    "missingReveal": 0,
+    "jsErrors": [],
+    "overflowElements": [
+      {
+        "tag": "DIV",
+        "cls": "fake-layer layer-one",
+        "right": 425
+      },
+      {
+        "tag": "DIV",
+        "cls": "architecture-halo",
+        "right": 460
+      },
+      {
+        "tag": "DIV",
+        "cls": "outro-glow",
+        "right": 520
+      }
+    ],
+    "menuExpanded": "true",
+    "menuClosedOnEscape": "false"
+  },
+  "320": {
+    "status": "inline preview",
+    "title": "FlameMC \u2014 Scale Your World. Keep Your Plugins.",
+    "horizontalOverflow": false,
+    "bodyScrollWidth": 320,
+    "pageHeight": 9004,
+    "images": 6,
+    "brokenImages": [],
+    "missingReveal": 0,
+    "jsErrors": [],
+    "overflowElements": [
+      {
+        "tag": "DIV",
+        "cls": "fake-layer layer-one",
+        "right": 355
+      },
+      {
+        "tag": "DIV",
+        "cls": "architecture-halo",
+        "right": 460
+      },
+      {
+        "tag": "DIV",
+        "cls": "outro-glow",
+        "right": 485
+      }
+    ]
+  }
+}

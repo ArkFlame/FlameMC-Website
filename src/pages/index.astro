@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090d" />
+  <meta name="color-scheme" content="dark" />
+  <title>FlameMC — Scale Your World. Keep Your Plugins.</title>
+  <meta name="description" content="FlameMC combines Folia's regionized multithreading with an owner-aware compatibility layer for familiar Bukkit and Paper workflows. Build beyond the single-thread ceiling." />
+  <link rel="canonical" href="https://flamemc.arkflame.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlameMC" />
+  <meta property="og:title" content="FlameMC — Scale Your World. Keep Your Plugins." />
+  <meta property="og:description" content="The concurrency of Folia. The ecosystem of Paper. Minecraft server software, reengineered." />
+  <meta property="og:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <meta property="og:url" content="https://flamemc.arkflame.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles/site.css" />
+  <script is:inline src="/scripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="page-noise" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <div class="header-inner container">
+      <a class="brand" href="#top" aria-label="FlameMC home">
+        <svg class="brand-flame" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M38 4C37 16 27 23 29 32c-6-4-8-9-7-16C12 25 9 34 13 45c3 10 11 16 21 16 12 0 22-11 19-23-2-9-7-15-13-20 1 7 0 12-4 16-4-9 0-21 2-30Z" fill="currentColor"/><path d="M32 36c-1 8-8 10-6 17 1 4 5 6 9 6 6 0 10-5 9-11-1-4-4-7-7-10-1 5-3 8-5 9 0-4 1-7 0-11Z" fill="#0b090b"/></svg>
+        <span>Flame<span class="brand-accent">MC</span></span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Main navigation" data-menu>
+        <a href="#advantages">Advantages</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#comparison">Why regions</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-action" href="#start">Explore FlameMC <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid container">
+        <div class="hero-copy">
+          <div class="eyebrow hero-eyebrow"><span class="eyebrow-line"></span> MINECRAFT SERVER SOFTWARE <span class="eyebrow-muted">/ REENGINEERED</span></div>
+          <h1 id="hero-title">Scale your world.<br/><span>Keep your plugins.</span></h1>
+          <p class="hero-lede">The concurrency of <strong>Folia</strong>. The familiar ecosystem of <strong>Paper</strong>. Finally, built to work together.</p>
+          <p class="hero-body">Parallel region threading and a compatibility layer designed around real Minecraft server workloads.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#architecture">See how it works <span aria-hidden="true">↗</span></a>
+            <a class="button button-ghost" href="#comparison">Why region threading <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="hero-points" aria-label="Key characteristics"><span><i aria-hidden="true"></i> Regionized threading</span><span><i aria-hidden="true"></i> Owner-aware compatibility</span></div>
+        </div>
+        <div class="hero-visual" aria-label="A stylized network of three Minecraft chunks linked by FlameMC">
+          <div class="hero-orbit hero-orbit-a" aria-hidden="true"></div>
+          <div class="hero-orbit hero-orbit-b" aria-hidden="true"></div>
+          <div class="hero-visual-glow" aria-hidden="true"></div>
+          <div class="hero-corner-label hero-corner-label-top"><span class="pulse-dot"></span> SYSTEM ONLINE <span class="mono-faint">/ FOLIA CORE</span></div>
+          <img class="hero-network" src="/assets/chunk-network.webp" alt="Three Minecraft grass chunks linked by the FlameMC flame, representing parallel regional work" width="1448" height="1086" fetchpriority="high" />
+          <div class="hero-corner-label hero-corner-label-bottom"><span class="tiny-cross">✦</span> ONE WORLD <span class="mono-faint">/ MANY REGION OWNERS</span></div>
+          <div class="corner-mark top-left" aria-hidden="true"></div><div class="corner-mark bottom-right" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="hero-bottom container">
+        <span>ENGINEERED FOR THE NEXT GENERATION OF MINECRAFT SERVERS</span>
+        <a href="#advantages" aria-label="Scroll to advantages">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <div class="signal-strip" aria-label="FlameMC platform strengths"><div class="signal-inner container"><span>FOLIA REGION THREADING</span><span class="signal-star" aria-hidden="true">✳</span><span>BUKKIT &amp; PAPER WORKFLOWS</span><span class="signal-star" aria-hidden="true">✳</span><span>BUILT FOR SCALE</span></div></div>
+
+    <section class="section advantages" id="advantages" aria-labelledby="advantages-title">
+      <div class="container">
+        <div class="section-intro" data-reveal>
+          <div><p class="kicker"><span class="kicker-num">01</span> / WHY FLAMEMC</p><h2 id="advantages-title">More headroom.<br/><span class="text-gradient">Less friction.</span></h2></div>
+          <p>Traditional plugins. Modern concurrency. A server foundation that grows with your world, not against it.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card feature-main" data-reveal>
+            <div class="feature-copy"><span class="feature-no">01 / PERFORMANCE</span><h3>Let your cores<br/><em>get to work.</em></h3><p>Folia divides the world into independently ticking regions. When workloads are distributed, more CPU cores can contribute to simulation.</p><span class="feature-tail">PARALLEL REGION EXECUTION <span aria-hidden="true">↗</span></span></div>
+            <div class="feature-main-art" aria-hidden="true"><div class="fake-layer layer-one"></div><div class="fake-layer layer-two"></div><div class="fake-layer layer-three"></div><img src="/assets/threading.webp" width="512" height="512" alt="" loading="lazy" /></div>
+          </article>
+          <article class="feature-card feature-plugins" data-reveal>
+            <div class="feature-icon"><img src="/assets/plugins.webp" width="512" height="512" alt="" loading="lazy" /></div>
+            <span class="feature-no">02 / COMPATIBILITY</span><h3>Your plugins.<br/><em>Still familiar.</em></h3><p>A FlameMC-owned compatibility layer helps legacy Bukkit and Paper workflows run within Folia's ownership model.</p><span class="feature-tail">PAPER ECOSYSTEM <span aria-hidden="true">↗</span></span>
+          </article>
+          <article class="feature-card feature-scale" data-reveal>
+            <div class="feature-icon"><img src="/assets/scale.webp" width="512" height="512" alt="" loading="lazy" /></div>
+            <span class="feature-no">03 / SCALE</span><h3>Built for<br/><em>bigger worlds.</em></h3><p>High-player-count worlds need better work distribution, not just a faster single thread.</p><span class="feature-tail">MULTI-REGION DESIGN <span aria-hidden="true">↗</span></span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section architecture" id="architecture" aria-labelledby="architecture-title">
+      <div class="architecture-halo" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-intro arch-intro" data-reveal>
+          <div><p class="kicker"><span class="kicker-num">02</span> / THE ARCHITECTURE</p><h2 id="architecture-title">One world.<br/><span class="text-gradient">Many owners.</span></h2></div>
+          <p>Folia owns the regions. FlameMC handles compatible plugin calls at the boundary. The ownership rules stay intact.</p>
+        </div>
+        <div class="architecture-grid">
+          <div class="region-panel" data-reveal>
+            <div class="panel-topline"><span><i class="status-led" aria-hidden="true"></i> LIVE REGION MAP</span><span>ILLUSTRATIVE TOPOLOGY</span></div>
+            <div class="region-matrix" aria-label="Conceptual grid of twenty-four independently ticking regions">
+              <span class="region-cell region-lit" data-lane="0" aria-hidden="true"><span>R01</span><i></i></span>
+<span class="region-cell " data-lane="1" aria-hidden="true"><span>R02</span><i></i></span>
+<span class="region-cell region-lit" data-lane="2" aria-hidden="true"><span>R03</span><i></i></span>
+<span class="region-cell region-lit" data-lane="3" aria-hidden="true"><span>R04</span><i></i></span>
+<span class="region-cell " data-lane="4" aria-hidden="true"><span>R05</span><i></i></span>
+<span class="region-cell region-lit" data-lane="5" aria-hidden="true"><span>R06</span><i></i></span>
+<span class="region-cell " data-lane="0" aria-hidden="true"><span>R07</span><i></i></span>
+<span class="region-cell region-lit" data-lane="1" aria-hidden="true"><span>R08</span><i></i></span>
+<span class="region-cell region-lit" data-lane="2" aria-hidden="true"><span>R09</span><i></i></span>
+<span class="region-cell " data-lane="3" aria-hidden="true"><span>R10</span><i></i></span>
+<span class="region-cell region-lit" data-lane="4" aria-hidden="true"><span>R11</span><i></i></span>
+<span class="region-cell " data-lane="5" aria-hidden="true"><span>R12</span><i></i></span>
+<span class="region-cell region-lit" data-lane="0" aria-hidden="true"><span>R13</span><i></i></span>
+<span class="region-cell region-lit" data-lane="1" aria-hidden="true"><span>R14</span><i></i></span>
+<span class="region-cell " data-lane="2" aria-hidden="true"><span>R15</span><i></i></span>
+<span class="region-cell region-lit" data-lane="3" aria-hidden="true"><span>R16</span><i></i></span>
+<span class="region-cell " data-lane="4" aria-hidden="true"><span>R17</span><i></i></span>
+<span class="region-cell region-lit" data-lane="5" aria-hidden="true"><span>R18</span><i></i></span>
+<span class="region-cell region-lit" data-lane="0" aria-hidden="true"><span>R19</span><i></i></span>
+<span class="region-cell " data-lane="1" aria-hidden="true"><span>R20</span><i></i></span>
+<span class="region-cell region-lit" data-lane="2" aria-hidden="true"><span>R21</span><i></i></span>
+<span class="region-cell " data-lane="3" aria-hidden="true"><span>R22</span><i></i></span>
+<span class="region-cell region-lit" data-lane="4" aria-hidden="true"><span>R23</span><i></i></span>
+<span class="region-cell region-lit" data-lane="5" aria-hidden="true"><span>R24</span><i></i></span>
+            </div>
+            <div class="region-panel-footer"><span><i class="legend-dot legend-red"></i> REGION OWNERSHIP</span><span><i class="legend-dot legend-green"></i> PARALLEL WORK</span></div>
+          </div>
+          <div class="architecture-copy" data-reveal>
+            <div class="arch-index">FOLIA + FLAMEMC / SYSTEM DESIGN</div>
+            <h3>Supported calls.<br/>The <span>right thread.</span></h3>
+            <p>Instead of pretending there is one universal main thread, FlameMC routes supported legacy operations through their actual owners.</p>
+            <ol class="architecture-steps">
+              <li><span class="step-num">01</span><div><strong>Plugin code calls the API.</strong><p>Familiar Bukkit and Paper interaction points.</p></div></li>
+              <li><span class="step-num">02</span><div><strong>FlameMC applies compatibility.</strong><p>Context-aware routing, scheduling and supported synchronous behavior.</p></div></li>
+              <li><span class="step-num">03</span><div><strong>Folia executes on the owner.</strong><p>Region, entity and global ownership remain the source of truth.</p></div></li>
+            </ol>
+            <p class="architecture-footnote">Supported operations follow their defined contracts; compatibility is not a blanket bypass of Folia thread safety.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section comparison" id="comparison" aria-labelledby="comparison-title">
+      <div class="container">
+        <div class="comparison-head" data-reveal>
+          <p class="kicker"><span class="kicker-num">03</span> / WHY REGIONS MATTER</p>
+          <h2 id="comparison-title">Stop bottlenecking<br/>your <span class="text-gradient">entire world.</span></h2>
+          <p>Same hardware. Different scheduling model. See why distributing world simulation changes what your server can do.</p>
+        </div>
+        <div class="comparison-cards">
+          <article class="compare-card compare-paper" data-reveal>
+            <header><div><span class="compare-label">TRADITIONAL MODEL</span><h3>Single tick lane.</h3></div><span class="compare-chip paper-chip">ONE PRIMARY THREAD</span></header>
+            <div class="compare-graphic compare-serial" aria-label="One dominant tick lane, with remaining cores mostly unused by world ticking">
+              <div class="cpu-lanes"><div class="cpu-lane" style="--fill:98%;--bar-delay:0.00s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:4%;--bar-delay:0.07s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:6%;--bar-delay:0.13s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:5%;--bar-delay:0.20s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:9%;--bar-delay:0.26s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:3%;--bar-delay:0.33s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:8%;--bar-delay:0.39s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:7%;--bar-delay:0.46s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:4%;--bar-delay:0.52s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:6%;--bar-delay:0.58s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:5%;--bar-delay:0.65s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:9%;--bar-delay:0.72s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:3%;--bar-delay:0.78s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:8%;--bar-delay:0.84s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:7%;--bar-delay:0.91s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:4%;--bar-delay:0.98s" aria-hidden="true"><span class="lane-fill"></span></div></div>
+              <div class="lane-names"><span>CORE 01</span><span>CORE 08</span><span>CORE 16</span></div>
+            </div>
+            <div class="compare-explanation"><strong>One busy lane.</strong><p>World tick simulation is constrained by a dominant execution thread, even on a multicore machine.</p></div>
+          </article>
+          <div class="versus" aria-hidden="true">VS</div>
+          <article class="compare-card compare-flame" data-reveal>
+            <header><div><span class="compare-label">REGIONIZED MODEL</span><h3>Parallel region work.</h3></div><span class="compare-chip flame-chip"><i class="status-led" aria-hidden="true"></i> MULTIPLE OWNERS</span></header>
+            <div class="compare-graphic compare-parallel" aria-label="Multiple active CPU lanes representing simultaneous eligible region work">
+              <div class="cpu-lanes"><div class="cpu-lane" style="--fill:64%;--bar-delay:0.00s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:73%;--bar-delay:0.07s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:48%;--bar-delay:0.13s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:69%;--bar-delay:0.20s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:58%;--bar-delay:0.26s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:81%;--bar-delay:0.33s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:60%;--bar-delay:0.39s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:74%;--bar-delay:0.46s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:66%;--bar-delay:0.52s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:52%;--bar-delay:0.58s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:79%;--bar-delay:0.65s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:61%;--bar-delay:0.72s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:67%;--bar-delay:0.78s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:72%;--bar-delay:0.84s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:58%;--bar-delay:0.91s" aria-hidden="true"><span class="lane-fill"></span></div>
+<div class="cpu-lane" style="--fill:75%;--bar-delay:0.98s" aria-hidden="true"><span class="lane-fill"></span></div></div>
+              <div class="lane-names"><span>CORE 01</span><span>CORE 08</span><span>CORE 16</span></div>
+            </div>
+            <div class="compare-explanation"><strong>More usable headroom.</strong><p>Independent Folia regions can tick concurrently, taking advantage of the CPU cores available.</p></div>
+          </article>
+        </div>
+        <p class="comparison-disclaimer">Conceptual scheduling illustration, not a measured benchmark. Actual improvements depend on region distribution, player behavior, plugins, and hardware.</p>
+      </div>
+    </section>
+
+    <section class="section compatibility" id="compatibility" aria-labelledby="compatibility-title">
+      <div class="container compat-grid">
+        <div class="compat-copy" data-reveal>
+          <p class="kicker"><span class="kicker-num">04</span> / THE COMPATIBILITY LAYER</p>
+          <h2 id="compatibility-title">Your server moves forward.<br/><span class="text-gradient">Your ecosystem comes along.</span></h2>
+          <p>Most server owners already have the plugins, commands, and workflows they rely on. FlameMC is engineered to bridge that investment into a region-threaded world.</p>
+          <div class="compat-claims"><div><span class="claim-icon">↗</span><strong>Legacy scheduler workflows</strong></div><div><span class="claim-icon">↗</span><strong>Ownership-aware Bukkit calls</strong></div><div><span class="claim-icon">↗</span><strong>Paper-style plugin integrations</strong></div></div>
+          <p class="support-note">Compatibility is API- and plugin-dependent. Validate your plugin set before production migration.</p>
+        </div>
+        <div class="compat-visual" data-reveal>
+          <div class="compat-rail"><div class="compat-tile plugin-tile"><img src="/assets/plugins.webp" width="512" height="512" alt="" loading="lazy" /><span>PAPER / BUKKIT</span></div><div class="compat-route"><span>CALLS</span><i></i><span>ROUTED</span></div><div class="compat-tile engine-tile"><img src="/assets/routing.webp" width="512" height="512" alt="" loading="lazy" /><span>FOLIA OWNERS</span></div></div>
+          <div class="compat-engine-label"><span class="status-led"></span> FLAMEMC COMPATIBILITY BOUNDARY</div>
+          <span class="visual-corner-a" aria-hidden="true">+</span><span class="visual-corner-b" aria-hidden="true">+</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq" aria-labelledby="faq-title">
+      <div class="container faq-grid">
+        <div class="faq-intro" data-reveal><p class="kicker"><span class="kicker-num">05</span> / QUESTIONS</p><h2 id="faq-title">Clear answers.<br/><span class="text-gradient">No magic claims.</span></h2><p>Powerful concurrency needs precise behavior. Here's what the platform actually sets out to do.</p></div>
+        <div class="faq-list" data-reveal>
+          <details><summary>Is FlameMC based on Folia?<span aria-hidden="true">+</span></summary><p>Yes. Folia's regionized threading and ownership model are the foundation. FlameMC builds its compatibility behavior around those guarantees.</p></details>
+          <details><summary>Will my Paper plugins work unchanged?<span aria-hidden="true">+</span></summary><p>Many common workflows are targeted by the compatibility layer, but full compatibility is not guaranteed. Plugins that rely on unsupported synchronous or cross-region behavior still need testing or adaptation.</p></details>
+          <details><summary>Does region threading guarantee higher TPS?<span aria-hidden="true">+</span></summary><p>No. Independent regions can use multiple cores, but performance depends on workload partitioning, how players are distributed, hardware, and plugin cost. No fixed multiplier is guaranteed.</p></details>
+          <details><summary>Does FlameMC disable Folia's safety checks?<span aria-hidden="true">+</span></summary><p>No. Its design keeps native ownership as the authority and routes compatible operations to the correct executor rather than freely accessing live state from the wrong region.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="outro" id="start" aria-labelledby="outro-title">
+      <div class="container outro-inner" data-reveal>
+        <div class="outro-glow" aria-hidden="true"></div>
+        <p class="kicker">A BETTER FOUNDATION FOR YOUR NEXT WORLD</p>
+        <h2 id="outro-title">The concurrency of <span>Folia.</span><br/>The ecosystem of <span>Paper.</span></h2>
+        <p>Minecraft server software, reengineered for scale.</p>
+        <div class="outro-actions"><a class="button button-primary" href="#top">Back to the top <span aria-hidden="true">↑</span></a><a class="button button-ghost" href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">Explore ArkFlame <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#top">FLAME<span>MC</span></a><span>THE NEXT GENERATION OF MINECRAFT SERVER SOFTWARE.</span><div><a href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">ARKFLAME STUDIOS ↗</a><span>© 2026 FLAMEMC</span></div></div></footer>
+</body>
+</html>

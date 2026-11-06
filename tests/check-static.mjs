@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const root=new URL('../',import.meta.url).pathname;
+const html=fs.readFileSync(path.join(root,'src/pages/index.astro'),'utf8');
+const css=fs.readFileSync(path.join(root,'public/styles/site.css'),'utf8');
+const script=fs.readFileSync(path.join(root,'public/scripts/site.js'),'utf8');
+const refs=[...html.matchAll(/(?:src|href)="(\/[^"]+)"/g)].map(x=>x[1]);
+for(const ref of refs) assert.ok(fs.existsSync(path.join(root,'public',ref.slice(1))),`Missing asset ${ref}`);
+for(const id of ['top','content','advantages','architecture','comparison','compatibility','faq','start']) assert.ok(html.includes(`id="${id}"`),`Missing id ${id}`);
+for(const ref of [...html.matchAll(/href="#([\w-]+)"/g)].map(x=>x[1])) assert.ok(html.includes(`id="${ref}"`),`Broken anchor ${ref}`);
+assert.ok(html.includes('Conceptual scheduling illustration, not a measured benchmark'));
+assert.ok(css.includes('prefers-reduced-motion'));
+assert.ok(script.includes('aria-expanded'));
+assert.equal(fs.readFileSync(path.join(root,'public/CNAME'),'utf8').trim(),'flamemc.arkflame.com');
+assert.ok(fs.readFileSync(path.join(root,'astro.config.mjs'),'utf8').includes('https://flamemc.arkflame.com'));
+console.log(`PASS: ${refs.length} asset references, anchors, accessibility hooks, benchmark disclaimer and CNAME`);

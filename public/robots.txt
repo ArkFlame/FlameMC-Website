@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://flamemc.arkflame.com/sitemap.xml
