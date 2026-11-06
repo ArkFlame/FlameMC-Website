@@ -1,12 +1,55 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
----
-<BaseLayout
-  title="FlameMC — Folia Multithreading with Paper Plugin Compatibility"
-  description="FlameMC Minecraft server software brings Folia regionized multithreading together with an owner-aware compatibility layer for Bukkit and Paper plugin workflows. Available on BuiltByBit."
-  path="/"
->
-  <main id="content">
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090d" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="FlameMC Minecraft server software brings Folia regionized multithreading together with an owner-aware compatibility layer for Bukkit and Paper plugin workflows. Available on BuiltByBit." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <title>FlameMC — Folia Multithreading with Paper Plugin Compatibility</title>
+  <link rel="canonical" href="https://flamemc.arkflame.com/" />
+  <link rel="alternate" type="application/rss+xml" title="FlameMC Guides" href="/rss.xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlameMC" />
+  <meta property="og:title" content="FlameMC — Folia Multithreading with Paper Plugin Compatibility" />
+  <meta property="og:description" content="FlameMC Minecraft server software brings Folia regionized multithreading together with an owner-aware compatibility layer for Bukkit and Paper plugin workflows. Available on BuiltByBit." />
+  <meta property="og:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <meta property="og:image:alt" content="FlameMC — Minecraft server software with Folia threading and Paper compatibility" />
+  <meta property="og:url" content="https://flamemc.arkflame.com/" />
+
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FlameMC — Folia Multithreading with Paper Plugin Compatibility" />
+  <meta name="twitter:description" content="FlameMC Minecraft server software brings Folia regionized multithreading together with an owner-aware compatibility layer for Bukkit and Paper plugin workflows. Available on BuiltByBit." />
+  <meta name="twitter:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/content.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://flamemc.arkflame.com/#publisher","name":"FlameMC","url":"https://flamemc.arkflame.com/","parentOrganization":{"@type":"Organization","name":"ArkFlame Studios","url":"https://arkflame.com/"},"sameAs":["https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/"]},{"@type":"WebSite","@id":"https://flamemc.arkflame.com/#website","name":"FlameMC","url":"https://flamemc.arkflame.com/","publisher":{"@id":"https://flamemc.arkflame.com/#publisher"},"inLanguage":"en"}]}</script>
+  <script src="/scripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="page-noise" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <div class="header-inner container">
+      <a class="brand" href="/" aria-label="FlameMC home">
+        <svg class="brand-flame" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M38 4C37 16 27 23 29 32c-6-4-8-9-7-16C12 25 9 34 13 45c3 10 11 16 21 16 12 0 22-11 19-23-2-9-7-15-13-20 1 7 0 12-4 16-4-9 0-21 2-30Z" fill="currentColor"/><path d="M32 36c-1 8-8 10-6 17 1 4 5 6 9 6 6 0 10-5 9-11-1-4-4-7-7-10-1 5-3 8-5 9 0-4 1-7 0-11Z" fill="#0b090b"/></svg>
+        <span>Flame<span class="brand-accent">MC</span></span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Main navigation" data-menu>
+        <a href="/#advantages">Benefits</a>
+        <a href="/#architecture">Architecture</a>
+        <a href="/#comparison">Threading</a>
+        <a href="/guides/">Guides</a>
+        <a class="nav-action" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    </div>
+  </header>
+    <main id="content">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-grid container">
         <div class="hero-copy">
@@ -231,5 +274,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
   </main>
-
-</BaseLayout>
+  <footer class="site-footer"><div class="container footer-inner">
+    <a class="footer-brand" href="/">FLAME<span>MC</span></a>
+    <span>THE CONCURRENCY OF FOLIA. THE ECOSYSTEM OF PAPER.</span>
+    <div class="footer-link-group"><a href="/guides/">GUIDES</a><a href="/download/">DOWNLOAD</a><a href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">ARKFLAME STUDIOS ↗</a><span>© 2026 FLAMEMC</span></div>
+  </div></footer>
+</body>
+</html>

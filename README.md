@@ -1,55 +1,33 @@
-# FlameMC Website — Astro 6
+# FlameMC Website — Static GitHub Pages Release V6
 
-Source for **https://flamemc.arkflame.com/**. Download FlameMC on [BuiltByBit](https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/).
+**No Astro build, npm, lockfiles, GitHub Pages settings API, or deployment workflow is required.**
 
-## Fix: GitHub Pages is running Jekyll instead of Astro
+This repository is a complete, prebuilt static website for **https://flamemc.arkflame.com/**.
 
-If an Actions log says `actions/jekyll-build-pages@v1` or `Invalid YAML front matter in src/pages/*.astro`, the **repository's Pages publishing source is still set to "Deploy from a branch."** Astro files contain JavaScript/TypeScript frontmatter, not Jekyll YAML. Do not edit them for Jekyll and do not publish the repository root.
+## Publishing
 
-**One-time correction:** In [repository Settings → Pages](https://github.com/ArkFlame/FlameMC-Website/settings/pages), change **Build and deployment → Source → GitHub Actions**. Then run the `Build and deploy FlameMC website` workflow from [Actions](https://github.com/ArkFlame/FlameMC-Website/actions/workflows/deploy.yml), using `main`.
+1. Commit **all files from this release at the repository root** of `ArkFlame/FlameMC-Website` on branch `main` (not inside an additional folder). Replace the old Astro `src/`, `public/`, `package.json` and obsolete deploy workflow — the released website is already compiled. Keep `.nojekyll` even though it is hidden on some systems.
+2. In GitHub **Settings → Pages**, use **Deploy from a branch**, `main` and `/(root)`. This is the configuration matching the provided Jekyll logs.
+3. Verify that both `index.html` and the **empty file** `.nojekyll` appear in the repository's root on `main`. `CNAME` must contain exactly `flamemc.arkflame.com`.
+4. When Pages finishes publishing, open https://flamemc.arkflame.com/ and https://flamemc.arkflame.com/guides/ . The repository Code tab will show this README; that is normal.
 
-**Command-line equivalent (requires repository Pages/Admin permissions):**
+## Why it works with your current configuration
 
-```bash
-bash scripts/fix-github-pages.sh ArkFlame/FlameMC-Website
-```
+GitHub Pages branch publishing traditionally runs Jekyll. A root `.nojekyll` disables Jekyll; GitHub deploys HTML/CSS/JS directly. This package also contains **no `.astro` files**, so a fallback Jekyll build has no Astro frontmatter to parse. The root `index.html` takes precedence over README rendering.
 
-This script switches Pages to Actions, verifies the custom domain, and triggers the deployment **only if the workflow exists on remote main**. It does not commit, push, or overwrite repository files. The GitHub CLI must be installed and authenticated via `gh auth login`. If GitHub denies the Pages settings API call, use the Settings UI; a normal workflow `GITHUB_TOKEN` cannot grant itself repository admin permissions.
+**Files you must see at the root:** `index.html`, `.nojekyll`, `CNAME`, `styles/`, `scripts/`, `assets/`, `guides/`, `download/`, `sitemap.xml`, `rss.xml`.
 
-After the workflow completes, verify the live page, not the repository's **Code** tab:
+## Content
 
-```bash
-bash scripts/diagnose-github-pages.sh ArkFlame/FlameMC-Website
-```
+- Main landing page with animation, architecture visualization, and BuiltByBit download CTA
+- 7 guides under `/guides/`, linked by sitemap and RSS
+- Download page, metadata, Open Graph image, 404, robots.txt
+- No external runtime dependencies, fonts, tracking, or JavaScript hydration
 
-The repo's Code tab will always show `README.md`; that is expected and is not the website.
+## Domain
 
-## Install, develop, build
+`CNAME` contains `flamemc.arkflame.com`. The DNS record should be `flamemc` → `arkflame.github.io` for this organization. Confirm the domain is assigned to this repository in Settings → Pages and HTTPS is enabled once its certificate has been issued.
 
-Use **Node.js 24** in CI. Node.js **22.12+** is supported by Astro 6.
+## Verification and risks
 
-```bash
-npm install
-npm run check:static
-npm run build
-npm run check:deploy
-npm run dev
-```
-
-The site lives under `src/pages` with seven SEO articles in `src/content/guides`. Assets are in `public/`. `npm run build` creates `dist/`. Only `dist/` is uploaded through `.github/workflows/deploy.yml`. It uses `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages` following the [GitHub Pages custom Actions workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-## Custom domain
-
-- Pages custom domain: `flamemc.arkflame.com`
-- Astro config `site: 'https://flamemc.arkflame.com'`, **no `base` prefix**.
-- DNS: `flamemc` CNAME to your GitHub Pages account/organization's `*.github.io` endpoint.
-- `public/CNAME` is bundled as `dist/CNAME`. It is **not** a substitute for configuring the domain in Pages settings.
-- `public/.nojekyll` is bundled as `dist/.nojekyll`; it **cannot** switch Pages away from a Jekyll build.
-
-## Release contents
-
-The landing page describes Folia regionized threading, FlameMC's compatibility approach, interactive conceptual diagrams, FAQs, and the available BuiltByBit listing. The seven guides cover Paper, Folia, Canvas, UniverseSpigot, migration, and region threading. Conceptual scheduling illustrations are not benchmark results; compatibility varies by workload and server build.
-
-## Verification limitations
-
-Local static checks can verify source correctness and workflow structure. The full Astro build requires npm dependencies. The live repository setting, custom-domain DNS, GitHub Actions run, and public page response must be verified after applying the one-time Pages configuration change. No source archive can change the live GitHub Pages publishing mode without GitHub administration access.
+The release is ready for direct branch publishing; the actual GitHub repository, Pages configuration, DNS, and external HTTPS endpoint cannot be changed or certified from an unauthenticated archive. Do not upload this archive as a single file; extract it and push its contents. If the site still shows README after an actual publishing run, inspect Pages' source branch/folder and the deployed hostname rather than editing the HTML.

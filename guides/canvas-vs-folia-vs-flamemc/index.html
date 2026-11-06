@@ -1,0 +1,138 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090d" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Compare CanvasMC, upstream Folia, and FlameMC by region threading, stability focus, plugin expectations, and migration requirements." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <title>Canvas vs Folia vs FlameMC: Minecraft Server Forks Compared | FlameMC</title>
+  <link rel="canonical" href="https://flamemc.arkflame.com/guides/canvas-vs-folia-vs-flamemc/" />
+  <link rel="alternate" type="application/rss+xml" title="FlameMC Guides" href="/rss.xml" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="FlameMC" />
+  <meta property="og:title" content="Canvas vs Folia vs FlameMC: Minecraft Server Forks Compared | FlameMC" />
+  <meta property="og:description" content="Compare CanvasMC, upstream Folia, and FlameMC by region threading, stability focus, plugin expectations, and migration requirements." />
+  <meta property="og:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <meta property="og:image:alt" content="FlameMC — Minecraft server software with Folia threading and Paper compatibility" />
+  <meta property="og:url" content="https://flamemc.arkflame.com/guides/canvas-vs-folia-vs-flamemc/" />
+
+
+    <meta property="article:published_time" content="2026-11-05T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-11-05T00:00:00Z" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Canvas vs Folia vs FlameMC: Minecraft Server Forks Compared | FlameMC" />
+  <meta name="twitter:description" content="Compare CanvasMC, upstream Folia, and FlameMC by region threading, stability focus, plugin expectations, and migration requirements." />
+  <meta name="twitter:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/content.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Canvas vs Folia vs FlameMC: Minecraft Server Forks Compared","description":"Compare CanvasMC, upstream Folia, and FlameMC by region threading, stability focus, plugin expectations, and migration requirements.","mainEntityOfPage":{"@type":"WebPage","@id":"https://flamemc.arkflame.com/guides/canvas-vs-folia-vs-flamemc/"},"url":"https://flamemc.arkflame.com/guides/canvas-vs-folia-vs-flamemc/","image":"https://flamemc.arkflame.com/og-image.png","datePublished":"2026-11-05T00:00:00Z","dateModified":"2026-11-05T00:00:00Z","author":{"@type":"Organization","name":"FlameMC","url":"https://flamemc.arkflame.com/"},"publisher":{"@type":"Organization","name":"FlameMC","url":"https://flamemc.arkflame.com/"},"inLanguage":"en","isAccessibleForFree":true}</script>
+  <script src="/scripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="page-noise" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <div class="header-inner container">
+      <a class="brand" href="/" aria-label="FlameMC home">
+        <svg class="brand-flame" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M38 4C37 16 27 23 29 32c-6-4-8-9-7-16C12 25 9 34 13 45c3 10 11 16 21 16 12 0 22-11 19-23-2-9-7-15-13-20 1 7 0 12-4 16-4-9 0-21 2-30Z" fill="currentColor"/><path d="M32 36c-1 8-8 10-6 17 1 4 5 6 9 6 6 0 10-5 9-11-1-4-4-7-7-10-1 5-3 8-5 9 0-4 1-7 0-11Z" fill="#0b090b"/></svg>
+        <span>Flame<span class="brand-accent">MC</span></span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Main navigation" data-menu>
+        <a href="/#advantages">Benefits</a>
+        <a href="/#architecture">Architecture</a>
+        <a href="/#comparison">Threading</a>
+        <a href="/guides/">Guides</a>
+        <a class="nav-action" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    </div>
+  </header>
+  <main id="content" class="editorial-page article-page"><article class="container article-shell">
+<nav class="article-breadcrumb" aria-label="Breadcrumb"><a href="/">FlameMC</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span>Comparison</span></nav>
+<header class="article-header"><div class="editorial-overline"><span class="status-led"></span> COMPARISON <span class="editorial-divider">/</span> FLAMEMC FIELD NOTES</div>
+<h1>Canvas vs Folia vs FlameMC: Minecraft Server Forks Compared</h1><p class="article-deck">Compare CanvasMC, upstream Folia, and FlameMC by region threading, stability focus, plugin expectations, and migration requirements.</p>
+<div class="article-byline"><span>FLAMEMC</span><span aria-hidden="true">·</span><time datetime="2026-11-05T00:00:00Z">November 5, 2026</time><span aria-hidden="true">·</span><span>6 MIN READ</span></div></header>
+<div class="article-layout"><aside class="article-aside"><span class="aside-label">THE SHORT ANSWER</span><p>All three use Folia-style region threading. Their differentiation is what each project builds on top of the concurrency foundation.</p><div class="aside-rule"></div><a href="/guides/">ALL GUIDES <span aria-hidden="true">↗</span></a></aside>
+<div class="article-content prose"><p><a href="https://canvasmc.io/">CanvasMC</a>, <a href="https://papermc.io/software/folia/">Folia</a> and FlameMC operate in a related architectural space: Minecraft server software that can tick independent world regions on multiple threads. Their goals and compatibility expectations are not identical.</p>
+<h2>Start with the shared constraint</h2>
+<p>Folia is a fork of Paper that introduces regionized multithreading. Each region must operate within its own ownership rules. This means a server fork cannot safely make every traditional Bukkit plugin “Folia compatible” by simply allowing arbitrary cross-thread world access.</p>
+<p>Canvas explicitly states that it does <strong>not</strong> bypass Folia threading safety rules. FlameMC likewise aims to preserve those rules, adding explicit compatibility handling for supported legacy plugin operations.</p>
+<h2>What Canvas focuses on</h2>
+<p>Canvas describes itself as a Folia fork focused on gameplay correctness, region-threading fixes, performance optimizations and configuration. Its published material also describes region-specific profiling and the ability to update its maintained region-threading patch set. These are <a href="https://github.com/CraftCanvasMC/Canvas">Canvas's published project claims</a>, not independent measurements in this article.</p>
+<p>Canvas is especially relevant if you already use Folia-aware plugins and want to evaluate another Folia-derived implementation with a different set of fixes and optimizations. Canvas's own documentation says it is <strong>not</strong> a drop-in replacement for ordinary Paper setups.</p>
+<h2>What FlameMC focuses on</h2>
+<p>FlameMC targets a different adoption obstacle: the legacy Bukkit/Paper ecosystem. It provides a Folia-based server with a compatibility architecture designed to mediate supported plugin operations according to actual region/entity/global ownership.</p>
+<p>The important qualifier is <strong>supported</strong>. No server-fork architecture can promise correct execution for every arbitrary plugin, especially code that relies on direct NMS access, unmodeled cross-region synchronous behavior or plugin-owned unsynchronized state.</p>
+<h2>Feature comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Decision criterion</th>
+<th>Folia</th>
+<th>CanvasMC</th>
+<th>FlameMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regionized multithreading</td>
+<td>Core architecture</td>
+<td>Folia-based</td>
+<td>Folia-based</td>
+</tr>
+<tr>
+<td>Main published focus</td>
+<td>Parallel region simulation</td>
+<td>Stability fixes and performance</td>
+<td>Region threading plus Paper-workflow compatibility</td>
+</tr>
+<tr>
+<td>Traditional Paper plugins</td>
+<td>Not drop-in</td>
+<td>Not drop-in</td>
+<td>Selected legacy operations targeted; test each plugin</td>
+</tr>
+<tr>
+<td>Ownership safety</td>
+<td>Required</td>
+<td>Explicitly preserved</td>
+<td>Explicitly preserved by design</td>
+</tr>
+<tr>
+<td>Guaranteed higher TPS</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>This table describes documented project direction, not a controlled speed ranking.</p>
+<h2>A fair migration test</h2>
+<p>Use identical worlds, Minecraft versions, Java/runtime settings and plugin sets where supported. Test not only TPS, but tick time distribution, player interactions, entity transfers, inventory operations and world shutdown. If an application needs the old synchronous Bukkit contract, test the functionality before prioritizing a few milliseconds of measured difference.</p>
+<p><strong>Choose the implementation whose real semantics match your workload.</strong> More patches or stronger marketing claims are not a substitute for correctness and reproducible measurements.</p>
+<h2>Sources and next steps</h2>
+<ul>
+<li><a href="https://papermc.io/software/folia/">Folia official project overview</a></li>
+<li><a href="https://canvasmc.io/">CanvasMC official site</a></li>
+<li><a href="https://github.com/CraftCanvasMC/Canvas">CanvasMC GitHub and compatibility notes</a></li>
+<li><a href="https://docs.papermc.io/folia/reference/overview/">Folia API ownership rules</a></li>
+<li><a href="/guides/flamemc-vs-folia/">FlameMC vs Folia</a></li>
+</ul>
+</div></div></article>
+<section class="container related-section"><div class="related-heading"><span class="kicker">KEEP READING</span><h2>Related guides.</h2></div><div class="related-grid"><a class="related-card" href="/guides/minecraft-server-software-comparison-2026/"><span>COMPARISON</span>
+<h3>Minecraft Server Software in 2026: Paper, Folia, Canvas, FlameMC &amp; UniverseSpigot</h3><span class="related-arrow" aria-hidden="true">↗</span></a><a class="related-card" href="/guides/paper-vs-folia/"><span>ARCHITECTURE</span>
+<h3>Paper vs Folia: Which Minecraft Server Architecture Should You Use?</h3><span class="related-arrow" aria-hidden="true">↗</span></a><a class="related-card" href="/guides/flamemc-vs-folia/"><span>COMPATIBILITY</span>
+<h3>FlameMC vs Folia: Region Threading with a Paper Compatibility Layer</h3><span class="related-arrow" aria-hidden="true">↗</span></a></div></section>
+<section class="container article-bottom-cta"><div><span class="kicker">NOW AVAILABLE</span><h2>Scale your world.<br/><span>Keep your plugins.</span></h2><p>Explore FlameMC on BuiltByBit and check the current compatibility and release details.</p></div>
+<a class="button button-primary" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a></section></main>
+  <footer class="site-footer"><div class="container footer-inner">
+    <a class="footer-brand" href="/">FLAME<span>MC</span></a>
+    <span>THE CONCURRENCY OF FOLIA. THE ECOSYSTEM OF PAPER.</span>
+    <div class="footer-link-group"><a href="/guides/">GUIDES</a><a href="/download/">DOWNLOAD</a><a href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">ARKFLAME STUDIOS ↗</a><span>© 2026 FLAMEMC</span></div>
+  </div></footer>
+</body>
+</html>

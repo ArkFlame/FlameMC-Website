@@ -1,0 +1,137 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090d" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Audit Bukkit and Paper plugins for Folia: scheduler usage, thread ownership, entity movement, plugin lifecycle, and FlameMC compatibility testing." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <title>Folia Plugin Compatibility: A Practical Migration Checklist | FlameMC</title>
+  <link rel="canonical" href="https://flamemc.arkflame.com/guides/folia-plugin-compatibility/" />
+  <link rel="alternate" type="application/rss+xml" title="FlameMC Guides" href="/rss.xml" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="FlameMC" />
+  <meta property="og:title" content="Folia Plugin Compatibility: A Practical Migration Checklist | FlameMC" />
+  <meta property="og:description" content="Audit Bukkit and Paper plugins for Folia: scheduler usage, thread ownership, entity movement, plugin lifecycle, and FlameMC compatibility testing." />
+  <meta property="og:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <meta property="og:image:alt" content="FlameMC — Minecraft server software with Folia threading and Paper compatibility" />
+  <meta property="og:url" content="https://flamemc.arkflame.com/guides/folia-plugin-compatibility/" />
+
+
+    <meta property="article:published_time" content="2026-11-05T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-11-05T00:00:00Z" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Folia Plugin Compatibility: A Practical Migration Checklist | FlameMC" />
+  <meta name="twitter:description" content="Audit Bukkit and Paper plugins for Folia: scheduler usage, thread ownership, entity movement, plugin lifecycle, and FlameMC compatibility testing." />
+  <meta name="twitter:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/content.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Folia Plugin Compatibility: A Practical Migration Checklist","description":"Audit Bukkit and Paper plugins for Folia: scheduler usage, thread ownership, entity movement, plugin lifecycle, and FlameMC compatibility testing.","mainEntityOfPage":{"@type":"WebPage","@id":"https://flamemc.arkflame.com/guides/folia-plugin-compatibility/"},"url":"https://flamemc.arkflame.com/guides/folia-plugin-compatibility/","image":"https://flamemc.arkflame.com/og-image.png","datePublished":"2026-11-05T00:00:00Z","dateModified":"2026-11-05T00:00:00Z","author":{"@type":"Organization","name":"FlameMC","url":"https://flamemc.arkflame.com/"},"publisher":{"@type":"Organization","name":"FlameMC","url":"https://flamemc.arkflame.com/"},"inLanguage":"en","isAccessibleForFree":true}</script>
+  <script src="/scripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="page-noise" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <div class="header-inner container">
+      <a class="brand" href="/" aria-label="FlameMC home">
+        <svg class="brand-flame" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M38 4C37 16 27 23 29 32c-6-4-8-9-7-16C12 25 9 34 13 45c3 10 11 16 21 16 12 0 22-11 19-23-2-9-7-15-13-20 1 7 0 12-4 16-4-9 0-21 2-30Z" fill="currentColor"/><path d="M32 36c-1 8-8 10-6 17 1 4 5 6 9 6 6 0 10-5 9-11-1-4-4-7-7-10-1 5-3 8-5 9 0-4 1-7 0-11Z" fill="#0b090b"/></svg>
+        <span>Flame<span class="brand-accent">MC</span></span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Main navigation" data-menu>
+        <a href="/#advantages">Benefits</a>
+        <a href="/#architecture">Architecture</a>
+        <a href="/#comparison">Threading</a>
+        <a href="/guides/">Guides</a>
+        <a class="nav-action" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    </div>
+  </header>
+  <main id="content" class="editorial-page article-page"><article class="container article-shell">
+<nav class="article-breadcrumb" aria-label="Breadcrumb"><a href="/">FlameMC</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span>Compatibility</span></nav>
+<header class="article-header"><div class="editorial-overline"><span class="status-led"></span> COMPATIBILITY <span class="editorial-divider">/</span> FLAMEMC FIELD NOTES</div>
+<h1>Folia Plugin Compatibility: A Practical Migration Checklist</h1><p class="article-deck">Audit Bukkit and Paper plugins for Folia: scheduler usage, thread ownership, entity movement, plugin lifecycle, and FlameMC compatibility testing.</p>
+<div class="article-byline"><span>FLAMEMC</span><span aria-hidden="true">·</span><time datetime="2026-11-05T00:00:00Z">November 5, 2026</time><span aria-hidden="true">·</span><span>7 MIN READ</span></div></header>
+<div class="article-layout"><aside class="article-aside"><span class="aside-label">THE SHORT ANSWER</span><p>A plugin loading on Folia does not prove it is thread-safe. Test real execution paths, ownership boundaries and lifecycle behavior.</p><div class="aside-rule"></div><a href="/guides/">ALL GUIDES <span aria-hidden="true">↗</span></a></aside>
+<div class="article-content prose"><p>Running existing Paper plugins on a region-threaded server requires more than checking a compatibility flag. <strong>Folia changes who owns live Minecraft state, and when a plugin may touch it.</strong> This checklist is useful whether you migrate directly to Folia or evaluate FlameMC's compatibility layer.</p>
+<h2>1. Inventory your plugin surface</h2>
+<p>Export your production plugin names, versions and dependencies. Record commands, events, repeating jobs, teleport paths, inventory handling, scoreboard use and world management for each plugin. A plugin with only chat formatting has a very different risk profile from a plugin that moves entities and edits chunks.</p>
+<p>Keep a rollback-capable copy of your world and plugin configuration. Do not discover migration failures on your only production save.</p>
+<h2>2. Understand the scheduler contract</h2>
+<p>Folia exposes region and entity schedulers because world state is not owned by one universal main thread. A block or chunk needs its region owner; a moving entity needs its entity owner, which can change over time. Global metadata has another execution domain.</p>
+<p>The <a href="https://docs.papermc.io/paper/dev/folia-support/">PaperMC compatibility guide</a> warns that the <code>folia-supported: true</code> plugin declaration is <strong>necessary for native Folia plugin loading but insufficient for safety</strong>.</p>
+<p>Audit these calls in particular:</p>
+<ul>
+<li>Traditional <code>BukkitScheduler</code> tasks that assume access to any world or player.</li>
+<li>Reads/writes to blocks or chunks outside the current region.</li>
+<li>Entity operations after teleportation, disconnect or retirement.</li>
+<li>Shared mutable maps, caches and collections used by callbacks in different regions.</li>
+<li>Asynchronous database work that later calls back into live server state.</li>
+</ul>
+<h2>3. Test behavior, not just startup</h2>
+<p>A plugin can load with no errors and fail only when two players enter different regions. Run smoke tests for:</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>What to verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Join, quit and reload</td>
+<td>No stale scheduler tasks or plugin callbacks after disable</td>
+</tr>
+<tr>
+<td>Two far-away players</td>
+<td>No illegal access to the other's live entity or block state</td>
+</tr>
+<tr>
+<td>Teleport and world change</td>
+<td>Ownership follows the entity, with correct results</td>
+</tr>
+<tr>
+<td>Inventory and GUI</td>
+<td>No unsafe concurrent mutation or lost item updates</td>
+</tr>
+<tr>
+<td>Region transitions</td>
+<td>Correct state after split, merge and player movement</td>
+</tr>
+<tr>
+<td>Command and event chains</td>
+<td>Expected ordering and return values, not fake success</td>
+</tr>
+</tbody>
+</table>
+<p>Include the shutdown path. Cancelling scheduled tasks, flushing data and unloading worlds often expose bugs missed during ordinary gameplay.</p>
+<h2>4. What FlameMC changes—and does not</h2>
+<p>FlameMC is designed to mediate <strong>supported</strong> legacy Bukkit/Paper operations through ownership-aware routing and compatibility contracts. This may allow workflows that vanilla Folia would otherwise reject or require plugin adaptation for. The scope is not universal: plugin-owned data races, undocumented NMS internals, and unsupported synchronous cross-owner operations may still need a code fix.</p>
+<p>Do not disable safety assertions or force world operations onto arbitrary background threads to make a broken test green. That hides the defect rather than repairing it.</p>
+<h2>5. Verify performance separately</h2>
+<p>Compatibility and speed are different acceptance criteria. After functional tests pass, compare tick times, CPU use, GC activity and region distribution under representative player loads. Folia performs best when the workload allows independent regions to make progress in parallel.</p>
+<p><strong>Migration succeeds when both gameplay correctness and operational performance are demonstrated.</strong> Read <a href="/guides/paper-vs-folia/">Paper vs Folia</a> for a platform choice framework.</p>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://docs.papermc.io/paper/dev/folia-support/">PaperMC: Supporting Paper and Folia plugins</a></li>
+<li><a href="https://docs.papermc.io/folia/reference/overview/">PaperMC: Region scheduling and ownership overview</a></li>
+<li><a href="https://github.com/PaperMC/Folia">Folia project compatibility notes</a></li>
+</ul>
+</div></div></article>
+<section class="container related-section"><div class="related-heading"><span class="kicker">KEEP READING</span><h2>Related guides.</h2></div><div class="related-grid"><a class="related-card" href="/guides/minecraft-server-software-comparison-2026/"><span>COMPARISON</span>
+<h3>Minecraft Server Software in 2026: Paper, Folia, Canvas, FlameMC &amp; UniverseSpigot</h3><span class="related-arrow" aria-hidden="true">↗</span></a><a class="related-card" href="/guides/paper-vs-folia/"><span>ARCHITECTURE</span>
+<h3>Paper vs Folia: Which Minecraft Server Architecture Should You Use?</h3><span class="related-arrow" aria-hidden="true">↗</span></a><a class="related-card" href="/guides/flamemc-vs-folia/"><span>COMPATIBILITY</span>
+<h3>FlameMC vs Folia: Region Threading with a Paper Compatibility Layer</h3><span class="related-arrow" aria-hidden="true">↗</span></a></div></section>
+<section class="container article-bottom-cta"><div><span class="kicker">NOW AVAILABLE</span><h2>Scale your world.<br/><span>Keep your plugins.</span></h2><p>Explore FlameMC on BuiltByBit and check the current compatibility and release details.</p></div>
+<a class="button button-primary" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a></section></main>
+  <footer class="site-footer"><div class="container footer-inner">
+    <a class="footer-brand" href="/">FLAME<span>MC</span></a>
+    <span>THE CONCURRENCY OF FOLIA. THE ECOSYSTEM OF PAPER.</span>
+    <div class="footer-link-group"><a href="/guides/">GUIDES</a><a href="/download/">DOWNLOAD</a><a href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">ARKFLAME STUDIOS ↗</a><span>© 2026 FLAMEMC</span></div>
+  </div></footer>
+</body>
+</html>

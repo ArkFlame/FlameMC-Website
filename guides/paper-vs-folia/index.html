@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090d" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Understand Paper’s primary tick thread, Folia regionized multithreading, plugin compatibility, and when FlameMC is worth evaluating." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <title>Paper vs Folia: Which Minecraft Server Architecture Should You Use? | FlameMC</title>
+  <link rel="canonical" href="https://flamemc.arkflame.com/guides/paper-vs-folia/" />
+  <link rel="alternate" type="application/rss+xml" title="FlameMC Guides" href="/rss.xml" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="FlameMC" />
+  <meta property="og:title" content="Paper vs Folia: Which Minecraft Server Architecture Should You Use? | FlameMC" />
+  <meta property="og:description" content="Understand Paper’s primary tick thread, Folia regionized multithreading, plugin compatibility, and when FlameMC is worth evaluating." />
+  <meta property="og:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <meta property="og:image:alt" content="FlameMC — Minecraft server software with Folia threading and Paper compatibility" />
+  <meta property="og:url" content="https://flamemc.arkflame.com/guides/paper-vs-folia/" />
+
+
+    <meta property="article:published_time" content="2026-11-05T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-11-05T00:00:00Z" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Paper vs Folia: Which Minecraft Server Architecture Should You Use? | FlameMC" />
+  <meta name="twitter:description" content="Understand Paper’s primary tick thread, Folia regionized multithreading, plugin compatibility, and when FlameMC is worth evaluating." />
+  <meta name="twitter:image" content="https://flamemc.arkflame.com/og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/content.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Paper vs Folia: Which Minecraft Server Architecture Should You Use?","description":"Understand Paper’s primary tick thread, Folia regionized multithreading, plugin compatibility, and when FlameMC is worth evaluating.","mainEntityOfPage":{"@type":"WebPage","@id":"https://flamemc.arkflame.com/guides/paper-vs-folia/"},"url":"https://flamemc.arkflame.com/guides/paper-vs-folia/","image":"https://flamemc.arkflame.com/og-image.png","datePublished":"2026-11-05T00:00:00Z","dateModified":"2026-11-05T00:00:00Z","author":{"@type":"Organization","name":"FlameMC","url":"https://flamemc.arkflame.com/"},"publisher":{"@type":"Organization","name":"FlameMC","url":"https://flamemc.arkflame.com/"},"inLanguage":"en","isAccessibleForFree":true}</script>
+  <script src="/scripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="page-noise" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <div class="header-inner container">
+      <a class="brand" href="/" aria-label="FlameMC home">
+        <svg class="brand-flame" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M38 4C37 16 27 23 29 32c-6-4-8-9-7-16C12 25 9 34 13 45c3 10 11 16 21 16 12 0 22-11 19-23-2-9-7-15-13-20 1 7 0 12-4 16-4-9 0-21 2-30Z" fill="currentColor"/><path d="M32 36c-1 8-8 10-6 17 1 4 5 6 9 6 6 0 10-5 9-11-1-4-4-7-7-10-1 5-3 8-5 9 0-4 1-7 0-11Z" fill="#0b090b"/></svg>
+        <span>Flame<span class="brand-accent">MC</span></span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Main navigation" data-menu>
+        <a href="/#advantages">Benefits</a>
+        <a href="/#architecture">Architecture</a>
+        <a href="/#comparison">Threading</a>
+        <a href="/guides/">Guides</a>
+        <a class="nav-action" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    </div>
+  </header>
+  <main id="content" class="editorial-page article-page"><article class="container article-shell">
+<nav class="article-breadcrumb" aria-label="Breadcrumb"><a href="/">FlameMC</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span>Architecture</span></nav>
+<header class="article-header"><div class="editorial-overline"><span class="status-led"></span> ARCHITECTURE <span class="editorial-divider">/</span> FLAMEMC FIELD NOTES</div>
+<h1>Paper vs Folia: Which Minecraft Server Architecture Should You Use?</h1><p class="article-deck">Understand Paper’s primary tick thread, Folia regionized multithreading, plugin compatibility, and when FlameMC is worth evaluating.</p>
+<div class="article-byline"><span>FLAMEMC</span><span aria-hidden="true">·</span><time datetime="2026-11-05T00:00:00Z">November 5, 2026</time><span aria-hidden="true">·</span><span>6 MIN READ</span></div></header>
+<div class="article-layout"><aside class="article-aside"><span class="aside-label">THE SHORT ANSWER</span><p>Paper is the lower-friction default. Folia offers parallel region ticking when workloads are spread out—but changes the plugin threading contract.</p><div class="aside-rule"></div><a href="/guides/">ALL GUIDES <span aria-hidden="true">↗</span></a></aside>
+<div class="article-content prose"><p><strong>Paper and Folia solve different bottlenecks.</strong> Neither is automatically faster for every Minecraft server. The critical decision is how the server distributes world simulation and how your plugins use the Bukkit/Paper API.</p>
+<h2>What Paper does well</h2>
+<p><a href="https://papermc.io/software/paper/">Paper</a> is a performance-focused Minecraft server built around the Bukkit/Spigot ecosystem. It improves chunk loading, entity behavior, lighting and other game-server internals while exposing a mature plugin API. World simulation still has a dominant primary tick-thread model, though Paper also uses additional threads for particular asynchronous tasks. It is incorrect to say Paper “uses only one CPU core.”</p>
+<p>For a minigame or SMP whose players crowd the same arena, Paper is often a straightforward choice: scheduling conventions are familiar, plugins commonly assume one primary thread, and administration tooling is widely available.</p>
+<h2>What Folia changes</h2>
+<p><a href="https://papermc.io/software/folia/">Folia</a> builds on Paper and divides loaded worlds into independently ticking regions. Regions that can safely execute independently may tick in parallel on multiple CPU cores. Entities, blocks and region-owned state must still be accessed by their correct owner.</p>
+<p>This is a change in the <strong>execution contract</strong>, not an “async everything” switch. A plugin callback cannot safely inspect a remote entity or block just because multiple tick threads exist. Folia introduces region, entity and global scheduling mechanisms to target the proper owner.</p>
+<h3>Workload distribution matters</h3>
+<p>Imagine 800 players in a tightly packed spawn versus 800 players spread across distant SMP bases. The first workload can remain concentrated in a limited number of region owners; the second offers more opportunities for parallel ticking. Folia can improve the second pattern, but it cannot guarantee a specific TPS increase.</p>
+<h2>The plugin compatibility trade-off</h2>
+<p>PaperMC explicitly states that Folia is <strong>not a drop-in replacement for Paper</strong>. The <code>folia-supported: true</code> declaration is a declaration by the plugin author, not a substitute for correctly handling ownership, shared mutable data and scheduling. See <a href="https://docs.papermc.io/paper/dev/folia-support/">PaperMC's plugin development guidance</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Paper</th>
+<th>Folia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>World tick scheduling</td>
+<td>Dominant primary tick thread</td>
+<td>Independently ticking owned regions</td>
+</tr>
+<tr>
+<td>Plugin ecosystem</td>
+<td>Broad Bukkit/Paper compatibility</td>
+<td>Plugins must be Folia-aware</td>
+</tr>
+<tr>
+<td>Ideal high-load shape</td>
+<td>Existing plugins, concentrated workloads</td>
+<td>Geographically distributed player activity</td>
+</tr>
+<tr>
+<td>Main migration risk</td>
+<td>Version/API changes</td>
+<td>Thread-ownership and shared-state assumptions</td>
+</tr>
+<tr>
+<td>Guaranteed speedup</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h2>Where FlameMC fits</h2>
+<p>FlameMC combines Folia's region-threading foundation with a compatibility layer designed to route <strong>supported</strong> legacy Bukkit/Paper operations to the correct owner. That can reduce migration friction without weakening Folia's thread-ownership rules. It does <strong>not</strong> mean every Paper plugin works unchanged. For details, read <a href="/guides/flamemc-vs-folia/">FlameMC vs Folia</a> and the <a href="/guides/folia-plugin-compatibility/">plugin migration checklist</a>.</p>
+<h2>How to choose</h2>
+<ol>
+<li><strong>Stay on Paper</strong> when plugin compatibility is the decisive requirement or your players mostly share one heavily loaded area.</li>
+<li><strong>Test Folia</strong> when players naturally spread across multiple independent areas and your plugin set is built for Folia.</li>
+<li><strong>Evaluate FlameMC</strong> when you want Folia's parallel region model but need to test supported legacy Paper workflows against FlameMC's compatibility layer.</li>
+</ol>
+<p>Use a cloned world, identical player simulations and the same hardware. Compare per-region tick times, TPS, CPU saturation, plugin errors and correctness—not just a single synthetic maximum-player figure.</p>
+<h2>Sources and further reading</h2>
+<ul>
+<li><a href="https://papermc.io/software/paper/">PaperMC: Paper server overview</a></li>
+<li><a href="https://papermc.io/software/folia/">PaperMC: Folia overview and limitations</a></li>
+<li><a href="https://docs.papermc.io/folia/reference/overview/">PaperMC: Folia region architecture</a></li>
+<li><a href="https://docs.papermc.io/paper/dev/folia-support/">PaperMC: Supporting Paper and Folia</a></li>
+</ul>
+</div></div></article>
+<section class="container related-section"><div class="related-heading"><span class="kicker">KEEP READING</span><h2>Related guides.</h2></div><div class="related-grid"><a class="related-card" href="/guides/minecraft-server-software-comparison-2026/"><span>COMPARISON</span>
+<h3>Minecraft Server Software in 2026: Paper, Folia, Canvas, FlameMC &amp; UniverseSpigot</h3><span class="related-arrow" aria-hidden="true">↗</span></a><a class="related-card" href="/guides/flamemc-vs-folia/"><span>COMPATIBILITY</span>
+<h3>FlameMC vs Folia: Region Threading with a Paper Compatibility Layer</h3><span class="related-arrow" aria-hidden="true">↗</span></a><a class="related-card" href="/guides/canvas-vs-folia-vs-flamemc/"><span>COMPARISON</span>
+<h3>Canvas vs Folia vs FlameMC: Minecraft Server Forks Compared</h3><span class="related-arrow" aria-hidden="true">↗</span></a></div></section>
+<section class="container article-bottom-cta"><div><span class="kicker">NOW AVAILABLE</span><h2>Scale your world.<br/><span>Keep your plugins.</span></h2><p>Explore FlameMC on BuiltByBit and check the current compatibility and release details.</p></div>
+<a class="button button-primary" href="https://builtbybit.com/resources/flamemc-extreme-async-performance.133143/" target="_blank" rel="noopener noreferrer">Get FlameMC <span aria-hidden="true">↗</span></a></section></main>
+  <footer class="site-footer"><div class="container footer-inner">
+    <a class="footer-brand" href="/">FLAME<span>MC</span></a>
+    <span>THE CONCURRENCY OF FOLIA. THE ECOSYSTEM OF PAPER.</span>
+    <div class="footer-link-group"><a href="/guides/">GUIDES</a><a href="/download/">DOWNLOAD</a><a href="https://arkflame.com/" target="_blank" rel="noopener noreferrer">ARKFLAME STUDIOS ↗</a><span>© 2026 FLAMEMC</span></div>
+  </div></footer>
+</body>
+</html>
